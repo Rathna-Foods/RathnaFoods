@@ -5,15 +5,160 @@
 <title>Rathna Foods</title>
 
 <style>
-body{margin:0;font-family:Segoe UI;background:#fffaf5;}
-header{background:#1f3d2b;color:#fff;text-align:center;padding:15px;}
-.container{padding:15px;}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;}
-.card{background:#fff;padding:12px;border-radius:10px;box-shadow:0 3px 8px rgba(0,0,0,.1);}
-button{background:#c0392b;color:#fff;border:none;padding:10px;width:100%;margin-top:8px;border-radius:6px;}
-select,input{width:100%;margin-top:6px;padding:6px;}
-.cart-box{position:fixed;bottom:0;width:100%;background:#000;color:#fff;padding:10px;text-align:center;}
-.footer{text-align:center;padding:20px;background:#eee;}
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:#fffaf5;
+}
+
+/* HEADER */
+header{
+background:#1f3d2b;
+color:white;
+text-align:center;
+padding:15px;
+}
+
+/* HERO */
+.hero{
+background:url('images/bg.jpg') center/cover no-repeat;
+color:white;
+text-align:center;
+padding:60px 20px;
+}
+.hero h1{
+font-size:32px;
+margin:0;
+}
+.hero p{
+font-size:16px;
+opacity:0.9;
+}
+
+/* FEATURES */
+.features{
+display:flex;
+flex-wrap:wrap;
+justify-content:space-around;
+background:#111;
+color:white;
+padding:20px 10px;
+}
+.feature{
+text-align:center;
+width:45%;
+margin:10px 0;
+}
+.feature i{
+font-size:30px;
+color:#f1c40f;
+}
+.feature p{
+font-size:14px;
+margin-top:5px;
+}
+
+/* OFFER */
+.offer{
+background:#e74c3c;
+color:white;
+text-align:center;
+padding:10px;
+font-weight:bold;
+}
+
+/* CONTAINER */
+.container{
+padding:15px;
+}
+
+/* SEARCH */
+input,select{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+margin-top:15px;
+}
+
+/* CARD */
+.card{
+background:white;
+border-radius:12px;
+box-shadow:0 4px 12px rgba(0,0,0,0.15);
+overflow:hidden;
+position:relative;
+transition:0.3s;
+}
+.card:hover{transform:translateY(-5px);}
+
+/* IMAGE */
+.card img{
+width:100%;
+height:160px;
+object-fit:cover;
+}
+
+/* BADGE */
+.badge{
+position:absolute;
+top:10px;
+left:10px;
+background:#e67e22;
+color:white;
+padding:4px 8px;
+border-radius:6px;
+font-size:12px;
+}
+
+/* CONTENT */
+.card-body{
+padding:10px;
+text-align:center;
+}
+.price{
+color:#c0392b;
+font-weight:bold;
+}
+
+/* BUTTON */
+button{
+background:#c0392b;
+color:white;
+border:none;
+padding:10px;
+width:100%;
+margin-top:8px;
+border-radius:6px;
+cursor:pointer;
+}
+
+/* CART */
+.cart{
+position:fixed;
+bottom:0;
+width:100%;
+background:black;
+color:white;
+text-align:center;
+padding:12px;
+}
+
+/* REVIEWS */
+.review{
+background:#fdfdfd;
+padding:10px;
+margin-top:10px;
+border-radius:10px;
+}
 </style>
 </head>
 
@@ -24,91 +169,128 @@ select,input{width:100%;margin-top:6px;padding:6px;}
 <p>Pure Spice Pure Love ❤️</p>
 </header>
 
+<div class="hero">
+<h1>Fresh Homemade Masalas</h1>
+<p>Made on Order • Delivered Fresh</p>
+</div>
+
+<div class="features">
+<div class="feature">
+<i>🌿</i>
+<p>100% Homemade</p>
+</div>
+<div class="feature">
+<i>🍲</i>
+<p>Freshly Prepared</p>
+</div>
+<div class="feature">
+<i>🍃</i>
+<p>Pure Ingredients</p>
+</div>
+<div class="feature">
+<i>🚚</i>
+<p>Delivered Fresh</p>
+</div>
+</div>
+
+<div class="offer">
+🔥 Free Delivery above ₹899 | Minimum Order ₹499
+</div>
+
 <div class="container">
 
-<h3>🔥 Combo Suggestion</h3>
-<p>Add any 3 powders to unlock better value 💰</p>
+<input id="search" placeholder="Search products..." onkeyup="filterProducts()">
 
-<h3>Your Details</h3>
-<input id="name" placeholder="Your Name">
-<input id="phone" placeholder="Phone Number">
-<input id="address" placeholder="Address">
+<select id="category" onchange="filterProducts()">
+<option value="all">All</option>
+<option value="spice">Spices</option>
+<option value="pickle">Pickles</option>
+<option value="sweet">Gulkand</option>
+</select>
 
-<h2>Products</h2>
-<div class="grid" id="products"></div>
+<div id="products" class="grid"></div>
+
+<h2>Customer Reviews ⭐</h2>
+
+<div class="review">😍 “Best homemade taste!”</div>
+<div class="review">🔥 “Amazing aroma!”</div>
+<div class="review">👌 “Feels like home food.”</div>
 
 </div>
 
-<div class="cart-box" onclick="checkout()">
-🛒 Items: <span id="count">0</span> | Total: ₹<span id="total">0</span>
-</div>
-
-<div class="footer">
-<img src="qr.png" width="150"><br>
-Free delivery above ₹899
+<div class="cart" onclick="checkout()">
+🛒 Items: <span id="count">0</span> | ₹<span id="total">0</span>
 </div>
 
 <script>
 let products=[
-["Puliyogare Powder",640],
-["Sambar Powder",640],
-["Rasam Powder",660],
-["Vangibath Powder",740],
-["Bisi Bele Bath Powder",740],
-["Chicken Masala",680],
-["Biriyani Powder",660],
-["Garam Masala",700],
-["Kebab Powder",500],
-["Groundnut Chutney Pudi",420],
-["Andhra Gun Powder",360],
-["Coconut Chutney Pudi",460],
-["Curry Leaves Chutney Pudi",420],
-["Chana Dal Chutney Pudi",380],
-["Tomato Pickle",380],
-["Mango Pickle",380],
-["Lemon Pickle",400],
-["Mix Veg Pickle",340],
-["Gulkand",450],
-["Dry Fruits Gulkand",700]
+["Puliyogare Powder",640,"images/puliyogare.jpg",true,"spice"],
+["Sambar Powder",640,"images/sambar.jpg",true,"spice"],
+["Rasam Powder",660,"images/rasam.jpg",true,"spice"],
+["Vangibath Powder",740,"images/vangibath.jpg",false,"spice"],
+["Bisi Bele Bath Powder",740,"images/bisibele.jpg",false,"spice"],
+["Chicken Masala",680,"images/chicken.jpg",true,"spice"],
+["Biriyani Powder",660,"images/biriyani.jpg",false,"spice"],
+["Garam Masala",700,"images/garam.jpg",true,"spice"],
+["Kebab Powder",500,"images/kebab.jpg",false,"spice"],
+["Groundnut Chutney Pudi",420,"images/groundnut.jpg",false,"spice"],
+["Andhra Gun Powder",360,"images/andhra.jpg",false,"spice"],
+["Coconut Chutney Pudi",460,"images/coconut.jpg",false,"spice"],
+["Curry Leaves Chutney Pudi",420,"images/curry.jpg",false,"spice"],
+["Chana Dal Chutney Pudi",380,"images/chana.jpg",false,"spice"],
+["Tomato Pickle",380,"images/tomato.jpg",true,"pickle"],
+["Mango Pickle",380,"images/mango.jpg",true,"pickle"],
+["Lemon Pickle",400,"images/lemon.jpg",false,"pickle"],
+["Mix Veg Pickle",340,"images/mixveg.jpg",false,"pickle"],
+["Gulkand",450,"images/gulkand.jpg",true,"sweet"],
+["Dry Fruits Gulkand",700,"images/drygulkand.jpg",true,"sweet"]
 ];
 
 let cart=[];
 
-function calc(base,size){
-if(size=="100g") return base/10;
-if(size=="200g") return base/5;
-if(size=="500g") return base/2;
-return base;
+function calc(b,s){
+if(s=="100g") return b/10;
+if(s=="200g") return b/5;
+if(s=="500g") return b/2;
+return b;
 }
 
-function load(){
+function filterProducts(){
+let search=document.getElementById("search").value.toLowerCase();
+let cat=document.getElementById("category").value;
+
 let html="";
 products.forEach((p,i)=>{
+if((cat=="all"||p[4]==cat)&&p[0].toLowerCase().includes(search)){
 html+=`
 <div class="card">
-<h4>${p[0]}</h4>
-<p>₹${p[1]} / kg</p>
+${p[3]?'<div class="badge">Best Seller</div>':''}
+<img src="${p[2]}">
+<div class="card-body">
+<h3>${p[0]}</h3>
+<p class="price">₹${p[1]} / kg</p>
 
-<select id="size${i}">
+<select id="s${i}">
 <option>100g</option>
 <option>200g</option>
 <option>500g</option>
 <option>1kg</option>
 </select>
 
-<input type="number" id="qty${i}" value="1" min="1">
+<input type="number" id="q${i}" value="1" min="1">
 
-<button onclick="add(${i})">Add</button>
+<button onclick="add(${i})">Add to Cart</button>
+</div>
 </div>`;
+}
 });
 document.getElementById("products").innerHTML=html;
 }
 
 function add(i){
-let size=document.getElementById("size"+i).value;
-let qty=document.getElementById("qty"+i).value;
+let size=document.getElementById("s"+i).value;
+let qty=document.getElementById("q"+i).value;
 let price=calc(products[i][1],size)*qty;
-
 cart.push({name:products[i][0],size,qty,price});
 update();
 }
@@ -121,15 +303,6 @@ document.getElementById("total").innerText=total;
 }
 
 function checkout(){
-let name=document.getElementById("name").value;
-let phone=document.getElementById("phone").value;
-let addr=document.getElementById("address").value;
-
-if(!name || !phone || !addr){
-alert("Fill all details");
-return;
-}
-
 let total=0;
 let msg="🛒 Rathna Foods Order:%0A";
 
@@ -138,22 +311,20 @@ total+=c.price;
 msg+=`${c.name} (${c.size}) x${c.qty} - ₹${c.price}%0A`;
 });
 
-if(total<499){alert("Minimum ₹499"); return;}
+if(total<499){alert("Minimum order ₹499"); return;}
 
-let delivery= total>=899?0:80;
+let delivery = total>=899?0:80;
 let final=total+delivery;
 
-msg+=`%0AName: ${name}`;
-msg+=`%0APhone: ${phone}`;
-msg+=`%0AAddress: ${addr}`;
-msg+=`%0ASubtotal: ₹${total}`;
-msg+=`%0ADelivery: ₹${delivery}`;
-msg+=`%0ATotal: ₹${final}`;
+msg+=`Subtotal: ₹${total}%0A`;
+msg+=`Delivery: ₹${delivery}%0A`;
+msg+=`Total: ₹${final}%0A`;
+msg+=`🔥 Freshly prepared after order!`;
 
-window.open("https://wa.me/919113955146?text="+msg);
+window.open("https://wa.me/918147924442?text="+msg);
 }
 
-load();
+filterProducts();
 </script>
 
 </body>
