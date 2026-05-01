@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rathna Foods</title>
+
+<style>
+body{margin:0;font-family:Segoe UI;background:#fffaf5;}
+header{background:#1f3d2b;color:#fff;text-align:center;padding:15px;}
+.container{padding:15px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;}
+.card{background:#fff;padding:12px;border-radius:10px;box-shadow:0 3px 8px rgba(0,0,0,.1);}
+button{background:#c0392b;color:#fff;border:none;padding:10px;width:100%;margin-top:8px;border-radius:6px;}
+select,input{width:100%;margin-top:6px;padding:6px;}
+.cart-box{position:fixed;bottom:0;width:100%;background:#000;color:#fff;padding:10px;text-align:center;}
+.footer{text-align:center;padding:20px;background:#eee;}
+</style>
+</head>
+
+<body>
+
+<header>
+<h2>Rathna Foods</h2>
+<p>Pure Spice Pure Love ❤️</p>
+</header>
+
+<div class="container">
+
+<h3>🔥 Combo Suggestion</h3>
+<p>Add any 3 powders to unlock better value 💰</p>
+
+<h3>Your Details</h3>
+<input id="name" placeholder="Your Name">
+<input id="phone" placeholder="Phone Number">
+<input id="address" placeholder="Address">
+
+<h2>Products</h2>
+<div class="grid" id="products"></div>
+
+</div>
+
+<div class="cart-box" onclick="checkout()">
+🛒 Items: <span id="count">0</span> | Total: ₹<span id="total">0</span>
+</div>
+
+<div class="footer">
+<img src="qr.png" width="150"><br>
+Free delivery above ₹899
+</div>
+
+<script>
+let products=[
+["Puliyogare Powder",640],
+["Sambar Powder",640],
+["Rasam Powder",660],
+["Vangibath Powder",740],
+["Bisi Bele Bath Powder",740],
+["Chicken Masala",680],
+["Biriyani Powder",660],
+["Garam Masala",700],
+["Kebab Powder",500],
+["Groundnut Chutney Pudi",420],
+["Andhra Gun Powder",360],
+["Coconut Chutney Pudi",460],
+["Curry Leaves Chutney Pudi",420],
+["Chana Dal Chutney Pudi",380],
+["Tomato Pickle",380],
+["Mango Pickle",380],
+["Lemon Pickle",400],
+["Mix Veg Pickle",340],
+["Gulkand",450],
+["Dry Fruits Gulkand",700]
+];
+
+let cart=[];
+
+function calc(base,size){
+if(size=="100g") return base/10;
+if(size=="200g") return base/5;
+if(size=="500g") return base/2;
+return base;
+}
+
+function load(){
+let html="";
+products.forEach((p,i)=>{
+html+=`
+<div class="card">
+<h4>${p[0]}</h4>
+<p>₹${p[1]} / kg</p>
+
+<select id="size${i}">
+<option>100g</option>
+<option>200g</option>
+<option>500g</option>
+<option>1kg</option>
+</select>
+
+<input type="number" id="qty${i}" value="1" min="1">
+
+<button onclick="add(${i})">Add</button>
+</div>`;
+});
+document.getElementById("products").innerHTML=html;
+}
+
+function add(i){
+let size=document.getElementById("size"+i).value;
+let qty=document.getElementById("qty"+i).value;
+let price=calc(products[i][1],size)*qty;
+
+cart.push({name:products[i][0],size,qty,price});
+update();
+}
+
+function update(){
+let total=0;
+cart.forEach(c=>total+=c.price);
+document.getElementById("count").innerText=cart.length;
+document.getElementById("total").innerText=total;
+}
+
+function checkout(){
+let name=document.getElementById("name").value;
+let phone=document.getElementById("phone").value;
+let addr=document.getElementById("address").value;
+
+if(!name || !phone || !addr){
+alert("Fill all details");
+return;
+}
+
+let total=0;
+let msg="🛒 Rathna Foods Order:%0A";
+
+cart.forEach(c=>{
+total+=c.price;
+msg+=`${c.name} (${c.size}) x${c.qty} - ₹${c.price}%0A`;
+});
+
+if(total<499){alert("Minimum ₹499"); return;}
+
+let delivery= total>=899?0:80;
+let final=total+delivery;
+
+msg+=`%0AName: ${name}`;
+msg+=`%0APhone: ${phone}`;
+msg+=`%0AAddress: ${addr}`;
+msg+=`%0ASubtotal: ₹${total}`;
+msg+=`%0ADelivery: ₹${delivery}`;
+msg+=`%0ATotal: ₹${final}`;
+
+window.open("https://wa.me/919113955146?text="+msg);
+}
+
+load();
+</script>
+
+</body>
+</html>
