@@ -4,35 +4,112 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rathna Foods</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
 <style>
 body{
 margin:0;
 font-family:'Poppins',sans-serif;
-background:#fffaf5;
+background:#fff;
+color:#222;
 }
 
 /* HEADER */
 header{
-background:#1f3d2b;
-color:white;
-text-align:center;
-padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 20px;
+background:white;
+border-bottom:1px solid #eee;
+position:sticky;
+top:0;
+z-index:100;
+}
+
+.logo{
+font-size:20px;
+font-weight:700;
+color:#8b0000;
 }
 
 /* HERO */
 .hero{
+height:70vh;
 background:url('images/bg.jpg') center/cover no-repeat;
-color:white;
+display:flex;
+align-items:center;
+justify-content:center;
 text-align:center;
-padding:60px 20px;
+color:white;
 }
 .hero h1{
-font-size:32px;
+font-size:40px;
 margin:0;
 }
 .hero p{
-font-size:16px;
-opacity:0.9;
+margin-top:10px;
+font-weight:300;
+}
+
+/* SECTION */
+.section{
+padding:40px 20px;
+max-width:1200px;
+margin:auto;
+}
+
+/* TITLE */
+.section h2{
+text-align:center;
+margin-bottom:30px;
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:25px;
+}
+
+/* CARD */
+.card{
+border-radius:12px;
+overflow:hidden;
+background:white;
+transition:0.3s;
+}
+.card:hover{
+transform:translateY(-5px);
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+.card img{
+width:100%;
+height:200px;
+object-fit:cover;
+}
+
+.card-body{
+padding:15px;
+text-align:center;
+}
+
+.price{
+color:#8b0000;
+font-weight:600;
+}
+
+/* BUTTON */
+button{
+background:#8b0000;
+color:white;
+border:none;
+padding:10px;
+width:100%;
+border-radius:6px;
+margin-top:8px;
+cursor:pointer;
 }
 
 /* FEATURES */
@@ -40,124 +117,36 @@ opacity:0.9;
 display:flex;
 flex-wrap:wrap;
 justify-content:space-around;
-background:#111;
-color:white;
-padding:20px 10px;
+text-align:center;
+padding:30px;
+background:#fafafa;
 }
 .feature{
-text-align:center;
-width:45%;
-margin:10px 0;
+width:200px;
+margin:10px;
 }
-.feature i{
-font-size:30px;
-color:#f1c40f;
-}
-.feature p{
-font-size:14px;
-margin-top:5px;
+.feature h4{
+margin:10px 0 5px;
 }
 
-/* OFFER */
-.offer{
-background:#e74c3c;
-color:white;
-text-align:center;
-padding:10px;
-font-weight:bold;
-}
-
-/* CONTAINER */
-.container{
-padding:15px;
-}
-
-/* SEARCH */
-input,select{
-width:100%;
-padding:10px;
-margin-top:10px;
-border-radius:8px;
-border:1px solid #ccc;
-}
-
-/* GRID */
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:15px;
-margin-top:15px;
-}
-
-/* CARD */
-.card{
-background:white;
-border-radius:12px;
-box-shadow:0 4px 12px rgba(0,0,0,0.15);
-overflow:hidden;
-position:relative;
-transition:0.3s;
-}
-.card:hover{transform:translateY(-5px);}
-
-/* IMAGE */
-.card img{
-width:100%;
-height:160px;
-object-fit:cover;
-}
-
-/* BADGE */
-.badge{
-position:absolute;
-top:10px;
-left:10px;
-background:#e67e22;
-color:white;
-padding:4px 8px;
-border-radius:6px;
-font-size:12px;
-}
-
-/* CONTENT */
-.card-body{
-padding:10px;
-text-align:center;
-}
-.price{
-color:#c0392b;
-font-weight:bold;
-}
-
-/* BUTTON */
-button{
-background:#c0392b;
-color:white;
-border:none;
-padding:10px;
-width:100%;
-margin-top:8px;
-border-radius:6px;
-cursor:pointer;
-}
-
-/* CART */
+/* CART BAR */
 .cart{
 position:fixed;
 bottom:0;
 width:100%;
-background:black;
+background:#000;
 color:white;
 text-align:center;
 padding:12px;
 }
 
-/* REVIEWS */
-.review{
-background:#fdfdfd;
-padding:10px;
-margin-top:10px;
-border-radius:10px;
+/* FOOTER */
+footer{
+background:#111;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:40px;
 }
 </style>
 </head>
@@ -165,110 +154,86 @@ border-radius:10px;
 <body>
 
 <header>
-<h2>Rathna Foods</h2>
-<p>Pure Spice Pure Love ❤️</p>
+<div class="logo">Rathna Foods</div>
 </header>
 
+<!-- HERO -->
 <div class="hero">
+<div>
 <h1>Fresh Homemade Masalas</h1>
-<p>Made on Order • Delivered Fresh</p>
+<p>Authentic Taste • Pure Ingredients</p>
+</div>
 </div>
 
+<!-- FEATURES -->
 <div class="features">
 <div class="feature">
-<i>🌿</i>
-<p>100% Homemade</p>
+<h4>🌿 100% Homemade</h4>
+<p>Made with love</p>
 </div>
 <div class="feature">
-<i>🍲</i>
-<p>Freshly Prepared</p>
+<h4>🔥 Freshly Prepared</h4>
+<p>Small batches</p>
 </div>
 <div class="feature">
-<i>🍃</i>
-<p>Pure Ingredients</p>
+<h4>🍃 Pure Ingredients</h4>
+<p>No preservatives</p>
 </div>
 <div class="feature">
-<i>🚚</i>
-<p>Delivered Fresh</p>
+<h4>🚚 Delivered Fresh</h4>
+<p>To your doorstep</p>
 </div>
 </div>
 
-<div class="offer">
-🔥 Free Delivery above ₹899 | Minimum Order ₹499
+<!-- PRODUCTS -->
+<div class="section">
+<h2>Our Products</h2>
+<div class="grid" id="products"></div>
 </div>
 
-<div class="container">
-
-<input id="search" placeholder="Search products..." onkeyup="filterProducts()">
-
-<select id="category" onchange="filterProducts()">
-<option value="all">All</option>
-<option value="spice">Spices</option>
-<option value="pickle">Pickles</option>
-<option value="sweet">Gulkand</option>
-</select>
-
-<div id="products" class="grid"></div>
-
-<h2>Customer Reviews ⭐</h2>
-
-<div class="review">😍 “Best homemade taste!”</div>
-<div class="review">🔥 “Amazing aroma!”</div>
-<div class="review">👌 “Feels like home food.”</div>
-
-</div>
-
+<!-- CART -->
 <div class="cart" onclick="checkout()">
-🛒 Items: <span id="count">0</span> | ₹<span id="total">0</span>
+🛒 <span id="count">0</span> | ₹<span id="total">0</span>
 </div>
+
+<footer>
+<p>Free Delivery above ₹899 | Min Order ₹499</p>
+<p>📞 8147924442</p>
+</footer>
 
 <script>
 let products=[
-["Puliyogare Powder",640,"images/puliyogare.jpg",true,"spice"],
-["Sambar Powder",640,"images/sambar.jpg",true,"spice"],
-["Rasam Powder",660,"images/rasam.jpg",true,"spice"],
-["Vangibath Powder",740,"images/vangibath.jpg",false,"spice"],
-["Bisi Bele Bath Powder",740,"images/bisibele.jpg",false,"spice"],
-["Chicken Masala",680,"images/chicken.jpg",true,"spice"],
-["Biriyani Powder",660,"images/biriyani.jpg",false,"spice"],
-["Garam Masala",700,"images/garam.jpg",true,"spice"],
-["Kebab Powder",500,"images/kebab.jpg",false,"spice"],
-["Groundnut Chutney Pudi",420,"images/groundnut.jpg",false,"spice"],
-["Andhra Gun Powder",360,"images/andhra.jpg",false,"spice"],
-["Coconut Chutney Pudi",460,"images/coconut.jpg",false,"spice"],
-["Curry Leaves Chutney Pudi",420,"images/curry.jpg",false,"spice"],
-["Chana Dal Chutney Pudi",380,"images/chana.jpg",false,"spice"],
-["Tomato Pickle",380,"images/tomato.jpg",true,"pickle"],
-["Mango Pickle",380,"images/mango.jpg",true,"pickle"],
-["Lemon Pickle",400,"images/lemon.jpg",false,"pickle"],
-["Mix Veg Pickle",340,"images/mixveg.jpg",false,"pickle"],
-["Gulkand",450,"images/gulkand.jpg",true,"sweet"],
-["Dry Fruits Gulkand",700,"images/drygulkand.jpg",true,"sweet"]
+["Puliyogare Powder",640,"images/puliyogare.jpg"],
+["Sambar Powder",640,"images/sambar.jpg"],
+["Rasam Powder",660,"images/rasam.jpg"],
+["Vangibath Powder",740,"images/vangibath.jpg"],
+["Bisi Bele Bath Powder",740,"images/bisibele.jpg"],
+["Chicken Masala",680,"images/chicken.jpg"],
+["Biriyani Powder",660,"images/biriyani.jpg"],
+["Garam Masala",700,"images/garam.jpg"],
+["Kebab Powder",500,"images/kebab.jpg"],
+["Gulkand",450,"images/gulkand.jpg"],
+["Dry Fruits Gulkand",700,"images/drygulkand.jpg"]
 ];
 
 let cart=[];
 
 function calc(b,s){
-if(s=="100g") return b/10;
-if(s=="200g") return b/5;
-if(s=="500g") return b/2;
+if(s=="100g")return b/10;
+if(s=="200g")return b/5;
+if(s=="500g")return b/2;
 return b;
 }
 
-function filterProducts(){
-let search=document.getElementById("search").value.toLowerCase();
-let cat=document.getElementById("category").value;
-
+function load(){
 let html="";
 products.forEach((p,i)=>{
-if((cat=="all"||p[4]==cat)&&p[0].toLowerCase().includes(search)){
 html+=`
 <div class="card">
-${p[3]?'<div class="badge">Best Seller</div>':''}
-<img src="${p[2]}">
+<img src="${p[2]}" onerror="this.src='images/default.jpg'">
 <div class="card-body">
 <h3>${p[0]}</h3>
-<p class="price">₹${p[1]} / kg</p>
+<p class="price">₹${p[1]}/kg</p>
 
 <select id="s${i}">
 <option>100g</option>
@@ -277,20 +242,20 @@ ${p[3]?'<div class="badge">Best Seller</div>':''}
 <option>1kg</option>
 </select>
 
-<input type="number" id="q${i}" value="1" min="1">
+<input id="q${i}" type="number" value="1">
 
 <button onclick="add(${i})">Add to Cart</button>
 </div>
 </div>`;
-}
 });
 document.getElementById("products").innerHTML=html;
 }
 
 function add(i){
 let size=document.getElementById("s"+i).value;
-let qty=document.getElementById("q"+i).value;
+let qty=parseInt(document.getElementById("q"+i).value);
 let price=calc(products[i][1],size)*qty;
+
 cart.push({name:products[i][0],size,qty,price});
 update();
 }
@@ -303,28 +268,24 @@ document.getElementById("total").innerText=total;
 }
 
 function checkout(){
-let total=0;
-let msg="🛒 Rathna Foods Order:%0A";
+let total=0,msg="🛒 Rathna Foods Order:%0A";
 
 cart.forEach(c=>{
 total+=c.price;
 msg+=`${c.name} (${c.size}) x${c.qty} - ₹${c.price}%0A`;
 });
 
-if(total<499){alert("Minimum order ₹499"); return;}
+if(total<499){alert("Minimum ₹499");return;}
 
-let delivery = total>=899?0:80;
+let delivery=total>=899?0:80;
 let final=total+delivery;
 
-msg+=`Subtotal: ₹${total}%0A`;
-msg+=`Delivery: ₹${delivery}%0A`;
-msg+=`Total: ₹${final}%0A`;
-msg+=`🔥 Freshly prepared after order!`;
+msg+=`Total: ₹${final}`;
 
 window.open("https://wa.me/918147924442?text="+msg);
 }
 
-filterProducts();
+load();
 </script>
 
 </body>
