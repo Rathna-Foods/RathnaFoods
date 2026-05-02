@@ -1,111 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rathna Foods</title>
-
-<!-- Razorpay -->
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-<style>
-body{margin:0;font-family:Poppins;background:#fff;color:#222}
-
-header{
-display:flex;justify-content:space-between;
-padding:15px;border-bottom:1px solid #eee;
-}
-
-.hero{
-height:50vh;
-background:url('images/bg.jpg') center/cover;
-display:flex;align-items:center;justify-content:center;
-color:white;text-align:center;
-}
-
-.section{padding:20px}
-
-input,select{
-width:100%;
-padding:10px;
-margin-top:10px;
-border-radius:6px;
-border:1px solid #ccc;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:15px;
-}
-
-.card{
-background:white;
-box-shadow:0 5px 15px rgba(0,0,0,.1);
-border-radius:10px;
-overflow:hidden;
-}
-
-.card img{
-width:100%;
-height:150px;
-object-fit:cover;
-}
-
-.card-body{text-align:center;padding:10px}
-
-button{
-background:#8b0000;color:white;border:none;
-padding:10px;width:100%;border-radius:6px;margin-top:5px;
-cursor:pointer;
-}
-
-.cart{
-position:fixed;bottom:0;width:100%;
-background:black;color:white;text-align:center;padding:10px;
-}
-
-.goto{
-position:fixed;
-bottom:60px;
-right:15px;
-background:#e67e22;
-color:white;
-padding:10px;
-border-radius:50px;
-cursor:pointer;
-display:none;
-}
-</style>
-</head>
-
-<body>
-
-<header>
-<h2>Rathna Foods</h2>
-</header>
-
-<div class="hero">
-<h1>Fresh Homemade Masalas</h1>
-</div>
-
-<div class="section">
-
-<h3>Customer Details</h3>
-<input id="name" placeholder="Name">
-<input id="phone" placeholder="Phone">
-<input id="address" placeholder="Address">
-
-<div class="grid" id="products"></div>
-
-</div>
-
-<div class="goto" id="gotoCart" onclick="scrollCart()">Go to Cart</div>
-
-<div class="cart" onclick="checkout()">
-🛒 <span id="count">0</span> | ₹<span id="total">0</span>
-</div>
-
 <script>
+document.addEventListener("DOMContentLoaded", function(){
+
 let products=[
 ["Puliyogare Powder",640,"images/puliyogare.jpg"],
 ["Sambar Powder",640,"images/sambar.jpg"],
@@ -147,7 +42,7 @@ html+=`
 document.getElementById("products").innerHTML=html;
 }
 
-function add(i){
+window.add= function(i){
 let size=document.getElementById("s"+i).value;
 let qty=parseInt(document.getElementById("q"+i).value);
 let price=calc(products[i][1],size)*qty;
@@ -165,18 +60,18 @@ document.getElementById("count").innerText=cart.length;
 document.getElementById("total").innerText=total;
 }
 
-function scrollCart(){
+window.scrollCart=function(){
 window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
 }
 
-function checkout(){
+window.checkout=function(){
 
 let name=document.getElementById("name").value.trim();
 let phone=document.getElementById("phone").value.trim();
 let addr=document.getElementById("address").value.trim();
 
 if(!name || !phone || !addr){
-alert("Please fill Name, Phone and Address before checkout");
+alert("Please fill all details");
 return;
 }
 
@@ -194,7 +89,12 @@ return;
 let delivery=total>=899?0:80;
 let final=total+delivery;
 
-/* RAZORPAY TEST PAYMENT */
+/* Razorpay safety check */
+if(typeof Razorpay === "undefined"){
+alert("Payment system not loaded. Refresh page.");
+return;
+}
+
 var options = {
 "key": "rzp_test_SkUDmNLwseMsIx",
 "amount": final * 100,
@@ -214,15 +114,6 @@ msg+=`Payment ID: ${response.razorpay_payment_id}`;
 
 window.open("https://wa.me/918147924442?text="+msg);
 
-},
-
-"prefill": {
-"name": name,
-"contact": phone
-},
-
-"theme": {
-"color": "#8b0000"
 }
 };
 
@@ -231,7 +122,6 @@ rzp.open();
 }
 
 load();
-</script>
 
-</body>
-</html>
+});
+</script>
