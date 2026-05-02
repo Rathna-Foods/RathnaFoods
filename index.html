@@ -4,43 +4,76 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rathna Foods</title>
 
+<!-- Razorpay -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <style>
-body{margin:0;font-family:Poppins;background:#fffaf5}
-header{padding:15px;background:#1f3d2b;color:white;text-align:center}
-.section{padding:15px}
-input,select{
-width:100%;padding:10px;margin-top:10px;
-border-radius:6px;border:1px solid #ccc;
+body{margin:0;font-family:Poppins;background:#fff;color:#222}
+
+header{
+display:flex;justify-content:space-between;
+padding:15px;border-bottom:1px solid #eee;
 }
+
+.hero{
+height:50vh;
+background:url('images/bg.jpg') center/cover;
+display:flex;align-items:center;justify-content:center;
+color:white;text-align:center;
+}
+
+.section{padding:20px}
+
+input,select{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:15px;margin-top:15px;
+gap:15px;
 }
+
 .card{
-background:white;border-radius:10px;
-box-shadow:0 4px 10px rgba(0,0,0,.1);
+background:white;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+border-radius:10px;
 overflow:hidden;
 }
+
 .card img{
-width:100%;height:150px;object-fit:cover;
+width:100%;
+height:150px;
+object-fit:cover;
 }
+
 .card-body{text-align:center;padding:10px}
+
 button{
 background:#8b0000;color:white;border:none;
-padding:10px;width:100%;border-radius:6px;
-margin-top:5px;cursor:pointer;
+padding:10px;width:100%;border-radius:6px;margin-top:5px;
+cursor:pointer;
 }
+
 .cart{
 position:fixed;bottom:0;width:100%;
-background:black;color:white;text-align:center;padding:12px;
+background:black;color:white;text-align:center;padding:10px;
 }
+
 .goto{
-position:fixed;bottom:70px;right:15px;
-background:#e67e22;color:white;padding:10px 15px;
-border-radius:30px;display:none;
+position:fixed;
+bottom:60px;
+right:15px;
+background:#e67e22;
+color:white;
+padding:10px;
+border-radius:50px;
+cursor:pointer;
+display:none;
 }
 </style>
 </head>
@@ -49,8 +82,11 @@ border-radius:30px;display:none;
 
 <header>
 <h2>Rathna Foods</h2>
-<p>Pure Spice Pure Love ❤️</p>
 </header>
+
+<div class="hero">
+<h1>Fresh Homemade Masalas</h1>
+</div>
 
 <div class="section">
 
@@ -73,27 +109,10 @@ border-radius:30px;display:none;
 let products=[
 ["Puliyogare Powder",640,"images/puliyogare.jpg"],
 ["Sambar Powder",640,"images/sambar.jpg"],
-["Rasam Powder",660,"images/rasam.jpg"],
-["Gulkand",450,"images/gulkand.jpg"],
-["Dry Fruits Gulkand",700,"images/drygulkand.jpg"]
+["Rasam Powder",660,"images/rasam.jpg"]
 ];
 
 let cart=[];
-
-/* AUTO LOAD DETAILS */
-window.onload=function(){
-document.getElementById("name").value=localStorage.getItem("name")||"";
-document.getElementById("phone").value=localStorage.getItem("phone")||"";
-document.getElementById("address").value=localStorage.getItem("address")||"";
-load();
-}
-
-/* SAVE DETAILS */
-function saveDetails(){
-localStorage.setItem("name",document.getElementById("name").value);
-localStorage.setItem("phone",document.getElementById("phone").value);
-localStorage.setItem("address",document.getElementById("address").value);
-}
 
 function calc(b,s){
 if(s=="100g")return b/10;
@@ -156,13 +175,10 @@ let name=document.getElementById("name").value.trim();
 let phone=document.getElementById("phone").value.trim();
 let addr=document.getElementById("address").value.trim();
 
-if(!name||!phone||!addr){
-alert("Please fill Name, Phone and Address");
+if(!name || !phone || !addr){
+alert("Please fill Name, Phone and Address before checkout");
 return;
 }
-
-/* SAVE DATA */
-saveDetails();
 
 let total=0,items="";
 cart.forEach(c=>{
@@ -171,21 +187,22 @@ items+=`${c.name} (${c.size}) x${c.qty}, `;
 });
 
 if(total<499){
-alert("Minimum order ₹499");
+alert("Minimum ₹499");
 return;
 }
 
 let delivery=total>=899?0:80;
 let final=total+delivery;
 
-/* RAZORPAY PAYMENT */
-var options={
-"key":"rzp_test_SkUDmNLwseMsIx",
-"amount":final*100,
-"currency":"INR",
-"name":"Rathna Foods",
-"description":"Order Payment",
-"handler":function (response){
+/* RAZORPAY TEST PAYMENT */
+var options = {
+"key": "rzp_test_SkUDmNLwseMsIx",
+"amount": final * 100,
+"currency": "INR",
+"name": "Rathna Foods",
+"description": "Order Payment",
+
+"handler": function (response){
 
 let msg=`🛒 Order Confirmed%0A`;
 msg+=`Name: ${name}%0A`;
@@ -198,15 +215,22 @@ msg+=`Payment ID: ${response.razorpay_payment_id}`;
 window.open("https://wa.me/918147924442?text="+msg);
 
 },
-"prefill":{
-"name":name,
-"contact":phone
+
+"prefill": {
+"name": name,
+"contact": phone
+},
+
+"theme": {
+"color": "#8b0000"
 }
 };
 
-var rzp=new Razorpay(options);
+var rzp = new Razorpay(options);
 rzp.open();
 }
+
+load();
 </script>
 
 </body>
